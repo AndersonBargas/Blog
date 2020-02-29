@@ -1,5 +1,6 @@
 baseURL = "https://andersonbargas.com/"
 languageCode = "pt-br"
+DefaultContentLanguage = "pt-br"
 title = "Anderson Bargas"
 theme = "soho"
 
@@ -11,24 +12,38 @@ enableEmoji = true
 [params]
 author = "Anderson Bargas"
 description = ""
+profilePicture = "/profile/anderson.jpg"
+copyright = "Anderson Bargas"
+themeColor = "#4b76f7"
+customCss = ["css/blog.css"]
+
+  [[params.socialIcons]]
+  icon = "fa-linkedin"
+  title = "Linkedin"
+  url = "https://www.linkedin.com/in/anderson-bargas-700a47119/"
 
   [[params.socialIcons]]
   icon = "fa-github"
   title = "GitHub"
   url = "https://github.com/AndersonBargas"
 
-[menu]
+  [[params.socialIcons]]
+  icon = "fa-twitter"
+  title = "Twitter"
+  url = "https://twitter.com/AndersonBargas"
 
-  [[menu.main]]
-  name = "Posts"
-  weight = 100
-  identifier = "posts"
-  url = "/posts/"
+#[menu]
+
+#  [[menu.main]]
+#  name = "Posts"
+#  weight = 100
+#  identifier = "posts"
+#  url = "/post/"
 
 [markup]
 
   [markup.highlight]
-  codeFences = true
+  codeFences = false
   guessSyntax = false
   hl_Lines = ""
   lineNoStart = 1
