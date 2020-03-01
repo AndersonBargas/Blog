@@ -97,7 +97,7 @@ A biblioteca [storm](https://github.com/asdine/storm "Link para o repositório n
 Temos dois modos para isso:
 
   * através da tag (como no exemplo);
-  * ou dando o nome de ID para o campo.
+  * dando o nome de ID para o campo.
 
 Neste projeto em que estive trabalhando, a ideia inicial era apenas indexar a chave primária para fazer consultas diretamente a um CEP.
 
@@ -238,7 +238,9 @@ Feito isto, basta executar o programa novamente e deixá-lo rodando até que ter
 ➜  rm banco.db 
 ➜  go build .
 ➜   ./indice 
-....................................................................^C
+..............................
+
+Quantidade de CEPs inseridos: 30000
 ➜  ls cpu.prof
 cpu.prof
 {{< /highlight >}}
@@ -263,7 +265,7 @@ Quando ativamos o profiler de CPU, o programa faz pequenas paradas (em torno de 
 
 Estas amostra são gravadas no arquivo de saída do profiler, o qual podemos abrir com a ajuda da ferramenta "pprof".
 
-Esta ferramenta possui vários comandos. Uma das que mais gosto dos mais úteis para o nosso caso é o "topN", onde N é um número.\
+Esta ferramenta possui vários comandos. Um bem útil para o nosso caso é o "topN", onde N é um número.\
 Vamos rodar o comando "top10" para visualizarmos as dez principais execuções:
 
 {{< highlight zsh >}}
@@ -319,7 +321,9 @@ Sendo assim, se estivermos inserindo o décimo CEP, este loop irá iterar 9 veze
 
 ### Solucionando o problema
 
-Após pensar um pouco, cheguei a uma conclusão: Chavés primárias não precisam de índice pois suas próprias chaves funcionam também como ID.
+Como vimos anteriormente, o [boltdb](https://github.com/etcd-io/bbolt "Link para o repositório no Github") nos diz que, dentro de um mesmo bucket, a chave deve ser única mas, não podemos deixar que isso nos confunda com o índice único.\
+Além de única, a chave primária tem a capacidade de conseguir identificar um registro específico.\
+Sendo assim, podemos usar a própria chave primária como ID (identificador), excluindo a necessidade de se criar um índice apartado.
 
 Neste sentido, criei um fork da biblioteca e fiz os ajustes necessários. O repositório está no endereço: [github.com/AndersonBargas/rainstorm](https://github.com/AndersonBargas/rainstorm "Link para o repositório no Github")
 
@@ -430,7 +434,8 @@ Compilando e executando:
 
 ![asciicast](/tty/primary-index-rainstorm.gif)
 
-Wow! 1 milhão de CEPs inseridos em 7 segundos. Baita ganho!
+Como vimos no output, 1 milhão de CEPs inseridos em 7 segundos.\
+Tivemos um excelente ganho de performance.
 
 ### Próximos passos
 
@@ -438,3 +443,7 @@ O trabalho ainda não acabou. Após analisar os outros tipos de índices, verifi
 Assim que tiver novidades volto a postar por aqui.
 
 Obrigado por ter lido e espero que tenha gostado!
+
+## Referências
+
+[Profiling Go Programs - The Go Blog](https://blog.golang.org/profiling-go-programs "Link para a referência")
