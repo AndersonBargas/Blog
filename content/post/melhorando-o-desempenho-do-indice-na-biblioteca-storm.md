@@ -15,6 +15,7 @@ categories = [
     "golang",
     "database",
 ]
+disableComments = false
 +++
 
 ### Introdução
