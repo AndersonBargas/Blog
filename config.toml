@@ -18,6 +18,7 @@ description = ""
 profilePicture = "/profile/anderson.jpg"
 copyright = "Anderson Bargas"
 themeColor = "#4b76f7"
+DisableComments = false
 customCss = ["css/blog.css"]
 
   [[params.socialIcons]]
